@@ -6,21 +6,52 @@ import SideNav, {
   NavText,
 } from '@trendmicro/react-sidenav'
 import '@trendmicro/react-sidenav/dist/react-sidenav.css'
+import './SideNavBar.styles.css'
+import { useNavigate } from 'react-router'
 
 const SideNavBar = () => {
+  const naviagate = useNavigate()
   return (
     <SideNav
       onSelect={(selected) => {
-        console.log(selected)
+        naviagate('/' + selected)
       }}
+      className='sideNavBar'
     >
       <Toggle />
-      <SideNav.Nav defaultSelected='home'>
-        <NavItem>
+      <SideNav.Nav defaultSelected=''>
+        <NavItem eventKey=''>
           <NavIcon>
             <i className='fa fa-fw fa-home' style={{ fontSize: '1.5em' }} />
           </NavIcon>
           <NavText>Home</NavText>
+        </NavItem>
+        <NavItem eventKey='world'>
+          <NavIcon>
+            <i
+              className='fa-solid fa-earth-asia'
+              style={{ fontSize: '1.5em' }}
+            />
+          </NavIcon>
+          <NavText>World</NavText>
+        </NavItem>
+        <NavItem eventKey='india'>
+          <NavIcon>
+            <i
+              className='fa-solid fa-earth-asia'
+              style={{ fontSize: '1.5em' }}
+            />
+          </NavIcon>
+          <NavText>India</NavText>
+        </NavItem>
+        <NavItem eventKey='aboutus'>
+          <NavIcon>
+            <i
+              className='fa-solid fa-circle-info'
+              style={{ fontSize: '1.5em' }}
+            />
+          </NavIcon>
+          <NavText>About Us</NavText>
         </NavItem>
       </SideNav.Nav>
     </SideNav>

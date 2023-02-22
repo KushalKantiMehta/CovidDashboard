@@ -1,0 +1,26 @@
+.home{
+display: flex;
+flex-direction: column;
+}
+.homeContent{
+padding: 20px;
+display: flex;
+flex-direction: row; 
+background-color: aqua;
+height: 90vh;
+}
+.homeTable{
+height: 75vh;
+padding: 20px;
+background-color:lightpink ;
+}
+.basicDetails{
+ flex:1;
+ background-color: lightcoral;
+ padding: 10px;
+}
+.indiaMap{
+flex: 1;
+background-color: rgb(128, 240, 175);
+padding: 10px;
+}

@@ -1,10 +1,30 @@
 import './App.css'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import Header from './component/Header'
 import SideNavBar from './component/SideNavBar'
+import NotFound from './screens/NotFound'
+import AboutUs from './screens/AboutUs'
+import Home from './screens/Home'
+import World from './screens/World'
+import India from './screens/India'
+
 function App() {
   return (
-    <div className='App'>
-      <SideNavBar />
-    </div>
+    <Router>
+      <div className='App'>
+        <SideNavBar />
+        <div className='mainContent'>
+          <Header />
+          <Routes>
+            <Route path='/' element={<Home />} exact />
+            <Route path='/world' element={<World />} exact />
+            <Route path='/india' element={<India />} exact />
+            <Route path='/aboutus' element={<AboutUs />} exact />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
   )
 }
 
