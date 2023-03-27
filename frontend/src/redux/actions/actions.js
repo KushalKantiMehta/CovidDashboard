@@ -11,7 +11,7 @@ export const getDataIndia = () => {
   }
 }
 
-export const setDataIndia = () => {
+export const setDataIndia = (data) => {
   return {
     type: SET_DATA_INDIA,
     payload: data,
@@ -24,7 +24,7 @@ export const getDataWorld = () => {
   }
 }
 
-export const setDataWorld = () => {
+export const setDataWorld = (data) => {
   return {
     type: SET_DATA_WORLD,
     payload: data,
