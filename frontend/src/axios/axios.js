@@ -10,12 +10,14 @@ const worldRequest = {
   },
 }
 
-export const getWorldData = axios
-  .request(worldRequest)
-  .then(function (response) {
-    return response
-  })
-  .catch(function (error) {
-    console.error(error)
-    return error
-  })
+export function getWorldData() {
+  return axios
+    .request(worldRequest)
+    .then(function (response) {
+      return response
+    })
+    .catch(function (error) {
+      console.error(error)
+      return error
+    })
+}
