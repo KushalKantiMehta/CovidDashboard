@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { getDataWorld } from '../redux/actions/actions'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
