@@ -1,8 +1,8 @@
 import { SET_DATA_INDIA, SET_DATA_WORLD } from '../constants/constants.js'
 
 const initialState = {
-  india: [],
-  world: [],
+  india: {},
+  world: {},
 }
 
 export const reducer = (state = initialState, action) => {

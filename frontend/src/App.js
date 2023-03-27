@@ -7,8 +7,12 @@ import AboutUs from './screens/AboutUs'
 import Home from './screens/Home'
 import World from './screens/World'
 import India from './screens/India'
+import { useDispatch } from 'react-redux'
+import { getDataWorld } from './redux/actions/actions'
 
 function App() {
+  const dispatch = useDispatch()
+  dispatch(getDataWorld())
   return (
     <Router>
       <div className='App'>
