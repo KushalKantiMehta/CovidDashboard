@@ -10,6 +10,7 @@ background-color: aqua;
 height: 90vh;
 }
 .homeTable{
+display: flex;
 height: 75vh;
 padding: 20px;
 background-color:lightpink ;
@@ -23,4 +24,23 @@ background-color:lightpink ;
 flex: 1;
 background-color: rgb(128, 240, 175);
 padding: 10px;
+}
+.tileRoot{
+
+display: flex;
+flex-direction: column;
+}
+.tileSubRoot{
+    padding: 30px;
+flex: 1;
+ display: flex; 
+}
+.tile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    background-color: chartreuse;
+    border-radius: 25px;
+    margin: 30px;
 }

@@ -58,7 +58,7 @@ const World = () => {
               align={headCell.numeric ? 'right' : 'left'}
               padding={headCell.disablePadding ? 'none' : 'normal'}
             >
-              {headCell.label}
+              <b>{headCell.label}</b>
             </TableCell>
           ))}
         </TableRow>
@@ -68,7 +68,7 @@ const World = () => {
 
   console.log(rows)
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '70%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
           <Table
