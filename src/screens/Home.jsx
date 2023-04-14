@@ -8,6 +8,7 @@ const Home = () => {
   const world = useSelector((state) => state.world)
   const rows = world?.countries_stat
   console.log(world)
+
   const columns = [
     { field: 'country_name', headerName: 'Country Name', width: 170 },
     { field: 'cases', headerName: 'Cases', type: 'number', width: 150 },

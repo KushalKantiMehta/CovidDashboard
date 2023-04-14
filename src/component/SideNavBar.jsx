@@ -8,6 +8,7 @@ import SideNav, {
 import '@trendmicro/react-sidenav/dist/react-sidenav.css'
 import './SideNavBar.styles.css'
 import { useNavigate } from 'react-router'
+import indiaIcon from '../assets/india.svg'
 
 const SideNavBar = () => {
   const naviagate = useNavigate()
@@ -36,11 +37,14 @@ const SideNavBar = () => {
           <NavText>World</NavText>
         </NavItem>
         <NavItem eventKey='india'>
-          <NavIcon>
-            <i
-              className='fa-solid fa-earth-asia'
-              style={{ fontSize: '1.5em' }}
-            />
+          <NavIcon
+            style={{
+              padding: '8px',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <img src={indiaIcon} alt='india-icon' />
           </NavIcon>
           <NavText>India</NavText>
         </NavItem>
