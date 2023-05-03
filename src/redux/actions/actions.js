@@ -3,6 +3,8 @@ import {
   FETCH_DATA_WORLD,
   SET_DATA_INDIA,
   SET_DATA_WORLD,
+  SET_DATA_INDIA_NEW,
+  FETCH_DATA_INDIA_NEW,
 } from '../constants/constants.js'
 
 export const getDataIndia = () => {
@@ -27,6 +29,19 @@ export const getDataWorld = () => {
 export const setDataWorld = (data) => {
   return {
     type: SET_DATA_WORLD,
+    payload: data,
+  }
+}
+
+export const getDataIndiaNew = () => {
+  return {
+    type: FETCH_DATA_INDIA_NEW,
+  }
+}
+
+export const setDataIndiaNew = (data) => {
+  return {
+    type: SET_DATA_INDIA_NEW,
     payload: data,
   }
 }

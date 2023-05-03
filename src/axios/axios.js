@@ -42,6 +42,22 @@ export function getIndiaData() {
     })
 }
 
+const indiaOptionsNew = {
+  method: 'GET',
+  url: 'https://data.covid19india.org/v4/min/data.min.json',
+}
+
+export function getIndiaDataNew() {
+  return axios
+    .request(indiaOptionsNew)
+    .then(function (response) {
+      return response
+    })
+    .catch(function (error) {
+      console.error(error)
+    })
+}
+
 const worldMapRequest = {
   method: 'GET',
   url: 'https://code.highcharts.com/mapdata/custom/world-highres.topo.json',
