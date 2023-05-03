@@ -1243,7 +1243,7 @@ const mapDataIndia = {
         'hc-group': 'admin1',
         'hc-middle-x': 0.56,
         'hc-middle-y': 0.32,
-        'hc-key': 'in-2984',
+        'hc-key': 'in-gj',
         'hc-a2': 'GU',
         labelrank: '2',
         hasc: 'IN.',
