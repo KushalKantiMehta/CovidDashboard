@@ -13,5 +13,5 @@ const middleware = [sagaMiddleware]
 const store = createStore(reducer, applyMiddleware(...middleware))
 sagaMiddleware.run(worldDataWatcher)
 sagaMiddleware.run(indiaDataWatcher)
-sagaMiddleware.run(indiaDataWatcherNewNew)
+sagaMiddleware.run(indiaDataWatcherNew)
 export default store
