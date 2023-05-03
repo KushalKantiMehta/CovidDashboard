@@ -1,5 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
 import { DataGrid } from '@mui/x-data-grid'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
@@ -13,6 +15,7 @@ const Home = () => {
   const indiaNew = useSelector((state) => state.indiaNew)
   const [mapDataIndiaValues, setMapDataIndiaValues] = React.useState([])
   const rows = world?.countries_stat
+  const [dataBarChart, setDataBarChart] = React.useState([])
   console.log(world)
   //console.log(indiaNew)
 
@@ -54,6 +57,49 @@ const Home = () => {
         },
       },
     ],
+  }
+
+  React.useEffect(() => {
+    const temp = [
+      parseFloat(world?.world_total?.total_cases.replaceAll(',', '')),
+      parseFloat(world?.world_total?.total_deaths.replaceAll(',', '')),
+      parseFloat(world?.world_total?.active_cases.replaceAll(',', '')),
+      parseFloat(world?.world_total?.total_recovered.replaceAll(',', '')),
+    ]
+    if (temp) {
+      console.log('temp', temp)
+      setDataBarChart(temp)
+    }
+  }, [world])
+
+  const chartOptions = {
+    chart: {
+      type: 'column',
+    },
+    title: {
+      text: '',
+    },
+    series: [
+      {
+        name: 'Covid Data',
+        type: 'column',
+        data: [...dataBarChart],
+      },
+    ],
+    xAxis: {
+      categories: [
+        'Total Cases',
+        'Total Deaths',
+        'Total Active',
+        'Total Recovered',
+      ],
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: 'No of Cases',
+      },
+    },
   }
 
   const columns = [
@@ -103,7 +149,9 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div style={{ flex: 1 }}></div>
+          <div style={{ flex: 1 }}>
+            <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+          </div>
         </div>
         <div className='indiaMap'>
           <HighchartsReact
