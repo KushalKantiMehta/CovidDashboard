@@ -25,6 +25,9 @@ const Home = () => {
   }, [indiaNew])
 
   const mapOptionsIndia = {
+    chart: {
+      map: mapDataIndia,
+    },
     title: {
       text: '',
     },
@@ -41,7 +44,6 @@ const Home = () => {
 
     series: [
       {
-        mapData: mapDataIndia,
         data: mapDataIndiaValues,
         name: 'Confrimed',
         states: {
