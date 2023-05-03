@@ -29,18 +29,29 @@ const Home = () => {
     const temp = Object.keys(indiaNew).map((value) => {
       return ['in-' + value.toLowerCase(), indiaNew?.[value]?.total?.confirmed]
     })
-    const total = Object.keys(indiaNew).map((value) => {
-      return {
-        total: {
-          confirmed: indiaNew?.[value]?.confirmed,
-          deceased: 10089,
-          recovered: 816283,
-          tested: 30928063,
-          vaccinated1: 44735217,
-          vaccinated2: 25972387,
-        },
+    const total = Object.keys(indiaNew).reduce(
+      (accumulator, value) => {
+        return {
+          confirmed: accumulator?.confirmed + indiaNew?.[value]?.confirmed,
+          deceased: accumulator?.deceased + indiaNew?.[value]?.deceased,
+          recovered: accumulator?.recovered + indiaNew?.[value]?.recovered,
+          tested: accumulator?.tested + indiaNew?.[value]?.tested,
+          vaccinated1:
+            accumulator?.vaccinated1 + indiaNew?.[value]?.vaccinated1,
+          vaccinated2:
+            accumulator?.vaccinated2 + indiaNew?.[value]?.vaccinated2,
+        }
+      },
+      {
+        confirmed: 0,
+        deceased: 0,
+        recovered: 0,
+        tested: 0,
+        vaccinated1: 0,
+        vaccinated2: 0,
       }
-    })
+    )
+    console.log('indiaTotal', total)
     setMapDataIndiaValues(temp)
   }, [indiaNew])
 
