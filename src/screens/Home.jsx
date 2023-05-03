@@ -27,15 +27,14 @@ const Home = () => {
   const mapOptionsIndia = {
     chart: {
       map: mapDataIndia,
+      height: '95%',
+      backgroundColor: '#00FFFFFF',
     },
     title: {
       text: '',
     },
     mapNavigation: {
-      enabled: true,
-      buttonOptions: {
-        verticalAlign: 'bottom',
-      },
+      enabled: false,
     },
 
     colorAxis: {
