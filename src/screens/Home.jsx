@@ -4,6 +4,7 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { DataGrid } from '@mui/x-data-grid'
 import Paper from '@mui/material/Paper'
+import AnimatedNumbers from 'react-animated-numbers'
 import mapDataIndia from '../MapData/indiaMap'
 import stateKVP from '../assets/state'
 import './Home.styles.css'
@@ -209,25 +210,74 @@ const Home = () => {
           <div style={{ flex: 1 }} className='tileRoot'>
             <div className='tileSubRoot'>
               <div className='tile'>
-                Confirmed <br />
-                {indiaTotalValues?.confirmed ?? 0}
+                Confirmed
+                <AnimatedNumbers
+                  includeComma
+                  animateToNumber={indiaTotalValues?.confirmed ?? 0}
+                  fontStyle={{ fontSize: 20 }}
+                  locale='en-US'
+                  configs={[
+                    { mass: 1, tension: 220, friction: 100 },
+                    { mass: 1, tension: 180, friction: 130 },
+                    { mass: 1, tension: 280, friction: 90 },
+                    { mass: 1, tension: 180, friction: 135 },
+                    { mass: 1, tension: 260, friction: 100 },
+                    { mass: 1, tension: 210, friction: 180 },
+                  ]}
+                ></AnimatedNumbers>
               </div>
               <div className='tile'>
                 Total Deaths
-                <br />
-                {indiaTotalValues?.deceased ?? 0}
+                <AnimatedNumbers
+                  includeComma
+                  animateToNumber={indiaTotalValues?.deceased ?? 0}
+                  fontStyle={{ fontSize: 20 }}
+                  locale='en-US'
+                  configs={[
+                    { mass: 1, tension: 220, friction: 100 },
+                    { mass: 1, tension: 180, friction: 130 },
+                    { mass: 1, tension: 280, friction: 90 },
+                    { mass: 1, tension: 180, friction: 135 },
+                    { mass: 1, tension: 260, friction: 100 },
+                    { mass: 1, tension: 210, friction: 180 },
+                  ]}
+                ></AnimatedNumbers>
               </div>
             </div>
             <div className='tileSubRoot'>
               <div className='tile'>
                 Tested Cases
-                <br />
-                {indiaTotalValues?.tested ?? 0}
+                <AnimatedNumbers
+                  includeComma
+                  animateToNumber={indiaTotalValues?.tested ?? 0}
+                  fontStyle={{ fontSize: 20 }}
+                  locale='en-US'
+                  configs={[
+                    { mass: 1, tension: 220, friction: 100 },
+                    { mass: 1, tension: 180, friction: 130 },
+                    { mass: 1, tension: 280, friction: 90 },
+                    { mass: 1, tension: 180, friction: 135 },
+                    { mass: 1, tension: 260, friction: 100 },
+                    { mass: 1, tension: 210, friction: 180 },
+                  ]}
+                ></AnimatedNumbers>
               </div>
               <div className='tile'>
                 Total Recovered
-                <br />
-                {indiaTotalValues?.recovered ?? 0}
+                <AnimatedNumbers
+                  includeComma
+                  animateToNumber={indiaTotalValues?.recovered ?? 0}
+                  fontStyle={{ fontSize: 20 }}
+                  locale='en-US'
+                  configs={[
+                    { mass: 1, tension: 220, friction: 100 },
+                    { mass: 1, tension: 180, friction: 130 },
+                    { mass: 1, tension: 280, friction: 90 },
+                    { mass: 1, tension: 180, friction: 135 },
+                    { mass: 1, tension: 260, friction: 100 },
+                    { mass: 1, tension: 210, friction: 180 },
+                  ]}
+                ></AnimatedNumbers>
               </div>
             </div>
           </div>
