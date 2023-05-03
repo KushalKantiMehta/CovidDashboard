@@ -1,13 +1,60 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { DataGrid } from '@mui/x-data-grid'
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
 import Paper from '@mui/material/Paper'
+import mapDataIndia from '../MapData/indiaMap'
 
 import './Home.styles.css'
+require('highcharts/modules/map')(Highcharts)
 const Home = () => {
   const world = useSelector((state) => state.world)
+  const indiaNew = useSelector((state) => state.indiaNew)
+  const [mapDataIndiaValues, setMapDataIndiaValues] = React.useState([])
   const rows = world?.countries_stat
   console.log(world)
+  //console.log(indiaNew)
+
+  React.useEffect(() => {
+    const temp = Object.keys(indiaNew).map((value) => {
+      return ['in-' + value.toLowerCase(), indiaNew?.[value]?.total?.confirmed]
+    })
+    setMapDataIndiaValues(temp)
+  }, [indiaNew])
+
+  const mapOptionsIndia = {
+    title: {
+      text: '',
+    },
+    mapNavigation: {
+      enabled: true,
+      buttonOptions: {
+        verticalAlign: 'bottom',
+      },
+    },
+
+    colorAxis: {
+      min: 0,
+    },
+
+    series: [
+      {
+        mapData: mapDataIndia,
+        data: mapDataIndiaValues,
+        name: 'Confrimed',
+        states: {
+          hover: {
+            color: '#BADA55',
+          },
+        },
+        dataLabels: {
+          enabled: true,
+          format: '{point.name}',
+        },
+      },
+    ],
+  }
 
   const columns = [
     { field: 'country_name', headerName: 'Country Name', width: 170 },
@@ -58,7 +105,13 @@ const Home = () => {
           </div>
           <div style={{ flex: 1 }}></div>
         </div>
-        <div className='indiaMap'>India chart map</div>
+        <div className='indiaMap'>
+          <HighchartsReact
+            options={mapOptionsIndia}
+            highcharts={Highcharts}
+            constructorType={'mapChart'}
+          />
+        </div>
       </div>
       <div className='homeTable'>
         <div style={{ flex: 1 }}>

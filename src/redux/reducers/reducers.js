@@ -7,6 +7,7 @@ import {
 const initialState = {
   india: {},
   world: {},
+  indiaNew: {},
 }
 
 export const reducer = (state = initialState, action) => {
