@@ -1,0 +1,12 @@
+.worldRoot{
+    display: flex;
+    flex-direction: column;
+}
+.worldMap{
+    height: 90vh;
+    padding: 20px;
+}
+.worldTable{
+    padding: 20px;
+    height: 75vh;
+}

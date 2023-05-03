@@ -1,100 +1,56 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import Box from '@mui/material/Box'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import { DataGrid } from '@mui/x-data-grid'
+import './World.styles.css'
 
 const World = () => {
   const world = useSelector((state) => state.world)
-
   const rows = world?.countries_stat
-  console.log(rows)
+  console.log(world)
 
-  const headCells = [
+  const columns = [
+    { field: 'country_name', headerName: 'Country Name', width: 170 },
+    { field: 'cases', headerName: 'Cases', type: 'number', width: 150 },
+    { field: 'deaths', headerName: 'Deaths', type: 'number', width: 150 },
     {
-      id: 'country_name',
-      numeric: false,
-      disablePadding: false,
-      label: 'Country',
+      field: 'total_recovered',
+      headerName: 'Recovered',
+      type: 'number',
+      width: 150,
     },
     {
-      id: 'cases',
-      numeric: true,
-      disablePadding: false,
-      label: 'Cases',
-    },
-    {
-      id: 'deaths',
-      numeric: true,
-      disablePadding: false,
-      label: 'Deaths',
-    },
-    {
-      id: 'active_cases',
-      numeric: true,
-      disablePadding: false,
-      label: 'Active Cases',
-    },
-    {
-      id: 'total_recovered',
-      numeric: true,
-      disablePadding: false,
-      label: 'Recovered',
+      field: 'active_cases',
+      headerName: 'Active Cases',
+      type: 'number',
+      width: 150,
     },
   ]
 
-  function EnhancedTableHead() {
-    return (
-      <TableHead>
-        <TableRow>
-          {headCells.map((headCell) => (
-            <TableCell
-              key={headCell.id}
-              align={headCell.numeric ? 'right' : 'left'}
-              padding={headCell.disablePadding ? 'none' : 'normal'}
-            >
-              <b>{headCell.label}</b>
-            </TableCell>
-          ))}
-        </TableRow>
-      </TableHead>
-    )
-  }
-
-  console.log(rows)
   return (
-    <Box sx={{ width: '70%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby='tableTitle'
-            size='medium'
+    <div className='worldRoot'>
+      <div className='worldMap'></div>
+      <div className='worldTable'>
+        {rows && (
+          <Paper
+            sx={{
+              flexGrow: 1,
+              height: '100%',
+              mb: 2,
+              borderRadius: '25px',
+            }}
           >
-            <EnhancedTableHead />
-            <TableBody>
-              {rows?.length &&
-                rows?.map((row) => {
-                  return (
-                    <TableRow>
-                      <TableCell align='left'>{row.country_name}</TableCell>
-                      <TableCell align='right'>{row.cases}</TableCell>
-                      <TableCell align='right'>{row.deaths}</TableCell>
-                      <TableCell align='right'>{row.active_cases}</TableCell>
-                      <TableCell align='right'>{row.total_recovered}</TableCell>
-                    </TableRow>
-                  )
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </Box>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              getRowId={(r) => r.country_name}
+              pageSize={10}
+              pageSizeOptions={[10, 25, 50]}
+            />
+          </Paper>
+        )}
+      </div>
+    </div>
   )
 }
 

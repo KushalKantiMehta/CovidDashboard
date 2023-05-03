@@ -30,7 +30,34 @@ const Home = () => {
   return (
     <div className='home'>
       <div className='homeContent'>
-        <div className='basicDetails'> some basic details</div>
+        <div className='basicDetails'>
+          <div style={{ flex: 1 }} className='tileRoot'>
+            <div className='tileSubRoot'>
+              <div className='tile'>
+                Total Cases <br />
+                {world?.world_total?.total_cases ?? 0}
+              </div>
+              <div className='tile'>
+                Total Deaths
+                <br />
+                {world?.world_total?.total_deaths ?? 0}
+              </div>
+            </div>
+            <div className='tileSubRoot'>
+              <div className='tile'>
+                Active Cases
+                <br />
+                {world?.world_total?.active_cases ?? 0}
+              </div>
+              <div className='tile'>
+                Total Recovered
+                <br />
+                {world?.world_total?.total_recovered ?? 0}
+              </div>
+            </div>
+          </div>
+          <div style={{ flex: 1 }}></div>
+        </div>
         <div className='indiaMap'>India chart map</div>
       </div>
       <div className='homeTable'>
@@ -54,31 +81,7 @@ const Home = () => {
             </Paper>
           )}
         </div>
-        <div style={{ flex: 1 }} className='tileRoot'>
-          <div className='tileSubRoot'>
-            <div className='tile'>
-              Total Cases <br />
-              {world?.world_total?.total_cases ?? 0}
-            </div>
-            <div className='tile'>
-              Total Deaths
-              <br />
-              {world?.world_total?.total_deaths ?? 0}
-            </div>
-          </div>
-          <div className='tileSubRoot'>
-            <div className='tile'>
-              Active Cases
-              <br />
-              {world?.world_total?.active_cases ?? 0}
-            </div>
-            <div className='tile'>
-              Total Recovered
-              <br />
-              {world?.world_total?.total_recovered ?? 0}
-            </div>
-          </div>
-        </div>
+        <div style={{ flex: 1 }}></div>
       </div>
     </div>
   )
