@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { DataGrid } from '@mui/x-data-grid'
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
 import Paper from '@mui/material/Paper'
 import mapDataIndia from '../MapData/indiaMap'
 
