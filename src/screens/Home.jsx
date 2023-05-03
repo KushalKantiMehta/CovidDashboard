@@ -115,18 +115,38 @@ const Home = () => {
     },
     series: [
       {
-        name: 'Covid Data',
+        name: 'Confirmed',
         type: 'column',
-        data: [...dataBarChart],
+        data: [indiaTotalValues?.confirmed],
+      },
+      {
+        name: 'Deaths',
+        type: 'column',
+        data: [indiaTotalValues?.deceased],
+      },
+      {
+        name: 'Tested',
+        type: 'column',
+        data: [indiaTotalValues?.tested],
+      },
+      {
+        name: 'Recovered',
+        type: 'column',
+        data: [indiaTotalValues?.recovered],
+      },
+      {
+        name: 'Vaccinated Dose 1',
+        type: 'column',
+        data: [indiaTotalValues?.vaccinated1],
+      },
+      {
+        name: 'Vaccinated Dose 2',
+        type: 'column',
+        data: [indiaTotalValues?.vaccinated2],
       },
     ],
     xAxis: {
-      categories: [
-        'Total Cases',
-        'Total Deaths',
-        'Total Active',
-        'Total Recovered',
-      ],
+      categories: ['Covid Data'],
     },
     yAxis: {
       min: 0,
