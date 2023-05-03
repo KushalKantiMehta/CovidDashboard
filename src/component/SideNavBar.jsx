@@ -22,21 +22,6 @@ const SideNavBar = () => {
       <Toggle />
       <SideNav.Nav defaultSelected=''>
         <NavItem eventKey=''>
-          <NavIcon>
-            <i className='fa fa-fw fa-home' style={{ fontSize: '1.5em' }} />
-          </NavIcon>
-          <NavText>Home</NavText>
-        </NavItem>
-        <NavItem eventKey='world'>
-          <NavIcon>
-            <i
-              className='fa-solid fa-earth-asia'
-              style={{ fontSize: '1.5em' }}
-            />
-          </NavIcon>
-          <NavText>World</NavText>
-        </NavItem>
-        <NavItem eventKey='india'>
           <NavIcon
             style={{
               padding: '8px',
@@ -47,6 +32,15 @@ const SideNavBar = () => {
             <img src={indiaIcon} alt='india-icon' />
           </NavIcon>
           <NavText>India</NavText>
+        </NavItem>
+        <NavItem eventKey='world'>
+          <NavIcon>
+            <i
+              className='fa-solid fa-earth-asia'
+              style={{ fontSize: '1.5em' }}
+            />
+          </NavIcon>
+          <NavText>World</NavText>
         </NavItem>
         <NavItem eventKey='aboutus'>
           <NavIcon>

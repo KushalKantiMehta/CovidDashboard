@@ -23,7 +23,7 @@ const Home = () => {
   const rows = world?.countries_stat
   const [dataBarChart, setDataBarChart] = React.useState([])
   console.log(world)
-  //console.log(indiaNew)
+  console.log(indiaNew)
 
   React.useEffect(() => {
     const temp = Object.keys(indiaNew).map((value) => {
@@ -31,15 +31,19 @@ const Home = () => {
     })
     const total = Object.keys(indiaNew).reduce(
       (accumulator, value) => {
+        console.log(accumulator)
+        console.log(indiaNew?.[value]?.confirmed)
         return {
-          confirmed: accumulator?.confirmed + indiaNew?.[value]?.confirmed,
-          deceased: accumulator?.deceased + indiaNew?.[value]?.deceased,
-          recovered: accumulator?.recovered + indiaNew?.[value]?.recovered,
-          tested: accumulator?.tested + indiaNew?.[value]?.tested,
+          confirmed:
+            accumulator?.confirmed + indiaNew?.[value]?.total?.confirmed,
+          deceased: accumulator?.deceased + indiaNew?.[value]?.total?.deceased,
+          recovered:
+            accumulator?.recovered + indiaNew?.[value]?.total?.recovered,
+          tested: accumulator?.tested + indiaNew?.[value]?.total?.tested,
           vaccinated1:
-            accumulator?.vaccinated1 + indiaNew?.[value]?.vaccinated1,
+            accumulator?.vaccinated1 + indiaNew?.[value]?.total?.vaccinated1,
           vaccinated2:
-            accumulator?.vaccinated2 + indiaNew?.[value]?.vaccinated2,
+            accumulator?.vaccinated2 + indiaNew?.[value]?.total?.vaccinated2,
         }
       },
       {
@@ -51,7 +55,7 @@ const Home = () => {
         vaccinated2: 0,
       }
     )
-    console.log('indiaTotal', total)
+    setIndiaTotalValues(total)
     setMapDataIndiaValues(temp)
   }, [indiaNew])
 
@@ -157,25 +161,25 @@ const Home = () => {
           <div style={{ flex: 1 }} className='tileRoot'>
             <div className='tileSubRoot'>
               <div className='tile'>
-                Total Cases <br />
-                {world?.world_total?.total_cases ?? 0}
+                Confirmed <br />
+                {indiaTotalValues?.confirmed ?? 0}
               </div>
               <div className='tile'>
                 Total Deaths
                 <br />
-                {world?.world_total?.total_deaths ?? 0}
+                {indiaTotalValues?.deceased ?? 0}
               </div>
             </div>
             <div className='tileSubRoot'>
               <div className='tile'>
-                Active Cases
+                Tested Cases
                 <br />
-                {world?.world_total?.active_cases ?? 0}
+                {indiaTotalValues?.tested ?? 0}
               </div>
               <div className='tile'>
                 Total Recovered
                 <br />
-                {world?.world_total?.total_recovered ?? 0}
+                {indiaTotalValues?.recovered ?? 0}
               </div>
             </div>
           </div>
