@@ -5,10 +5,11 @@ import HighchartsReact from 'highcharts-react-official'
 import { DataGrid } from '@mui/x-data-grid'
 import Paper from '@mui/material/Paper'
 import mapDataIndia from '../MapData/indiaMap'
-
+import stateKVP from '../assets/state'
 import './Home.styles.css'
 require('highcharts/modules/map')(Highcharts)
 const Home = () => {
+  //to be moved to world page
   const world = useSelector((state) => state.world)
   const indiaNew = useSelector((state) => state.indiaNew)
   const [mapDataIndiaValues, setMapDataIndiaValues] = React.useState([])
@@ -20,10 +21,21 @@ const Home = () => {
     vaccinated1: 0,
     vaccinated2: 0,
   })
-  const rows = world?.countries_stat
+
+  const rows = Object.keys(indiaNew).map((val) => {
+    return {
+      state_name: stateKVP?.[val],
+      confirmed: indiaNew?.[val]?.total?.confirmed,
+      deceased: indiaNew?.[val]?.total?.deceased,
+      recovered: indiaNew?.[val]?.total?.recovered,
+      tested: indiaNew?.[val]?.total?.tested,
+      vaccinated1: indiaNew?.[val]?.total?.vaccinated1,
+      vaccinated2: indiaNew?.[val]?.total?.vaccinated2,
+    }
+  })
+  console.log(rows)
+  // to be moved to world page
   const [dataBarChart, setDataBarChart] = React.useState([])
-  console.log(world)
-  console.log(indiaNew)
 
   React.useEffect(() => {
     const temp = Object.keys(indiaNew).map((value) => {
@@ -31,8 +43,6 @@ const Home = () => {
     })
     const total = Object.keys(indiaNew).reduce(
       (accumulator, value) => {
-        console.log(accumulator)
-        console.log(indiaNew?.[value]?.confirmed)
         return {
           confirmed:
             accumulator?.confirmed + indiaNew?.[value]?.total?.confirmed,
@@ -93,6 +103,7 @@ const Home = () => {
     ],
   }
 
+  // to be moved to world page
   React.useEffect(() => {
     const temp = [
       parseFloat(world?.world_total?.total_cases.replaceAll(',', '')),
@@ -157,18 +168,35 @@ const Home = () => {
   }
 
   const columns = [
-    { field: 'country_name', headerName: 'Country Name', width: 170 },
-    { field: 'cases', headerName: 'Cases', type: 'number', width: 150 },
-    { field: 'deaths', headerName: 'Deaths', type: 'number', width: 150 },
+    { field: 'state_name', headerName: 'State Name', width: 170 },
     {
-      field: 'total_recovered',
+      field: 'confirmed',
+      headerName: ' Confirmed Cases',
+      type: 'number',
+      width: 150,
+    },
+    { field: 'deceased', headerName: 'Deaths', type: 'number', width: 150 },
+    {
+      field: 'recovered',
       headerName: 'Recovered',
       type: 'number',
       width: 150,
     },
     {
-      field: 'active_cases',
-      headerName: 'Active Cases',
+      field: 'tested',
+      headerName: 'Tested Cases',
+      type: 'number',
+      width: 150,
+    },
+    {
+      field: 'vaccinated1',
+      headerName: 'Vaccinated Dose 1',
+      type: 'number',
+      width: 150,
+    },
+    {
+      field: 'vaccinated2',
+      headerName: 'Vaccinated Dose 2',
       type: 'number',
       width: 150,
     },
@@ -216,7 +244,7 @@ const Home = () => {
         </div>
       </div>
       <div className='homeTable'>
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 2 }}>
           {rows && (
             <Paper
               sx={{
@@ -229,7 +257,7 @@ const Home = () => {
               <DataGrid
                 rows={rows}
                 columns={columns}
-                getRowId={(r) => r.country_name}
+                getRowId={(r) => r.state_name}
                 pageSize={10}
                 pageSizeOptions={[10, 25, 50]}
               />
