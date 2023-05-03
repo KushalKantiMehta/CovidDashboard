@@ -10,8 +10,6 @@ import stateKVP from '../assets/state'
 import './Home.styles.css'
 require('highcharts/modules/map')(Highcharts)
 const Home = () => {
-  //to be moved to world page
-  const world = useSelector((state) => state.world)
   const indiaNew = useSelector((state) => state.indiaNew)
   const [mapDataIndiaValues, setMapDataIndiaValues] = React.useState([])
   const [indiaTotalValues, setIndiaTotalValues] = React.useState({
@@ -34,9 +32,6 @@ const Home = () => {
       vaccinated2: indiaNew?.[val]?.total?.vaccinated2,
     }
   })
-  console.log(rows)
-  // to be moved to world page
-  const [dataBarChart, setDataBarChart] = React.useState([])
 
   React.useEffect(() => {
     const temp = Object.keys(indiaNew).map((value) => {
@@ -103,20 +98,6 @@ const Home = () => {
       },
     ],
   }
-
-  // to be moved to world page
-  React.useEffect(() => {
-    const temp = [
-      parseFloat(world?.world_total?.total_cases.replaceAll(',', '')),
-      parseFloat(world?.world_total?.total_deaths.replaceAll(',', '')),
-      parseFloat(world?.world_total?.active_cases.replaceAll(',', '')),
-      parseFloat(world?.world_total?.total_recovered.replaceAll(',', '')),
-    ]
-    if (temp) {
-      console.log('temp', temp)
-      setDataBarChart(temp)
-    }
-  }, [world])
 
   const chartOptions = {
     chart: {
