@@ -264,6 +264,21 @@ const Home = () => {
     }
   }
 
+  const getMaxValue = () => {
+    if (tileDeaths) {
+      return 100000
+    }
+    if (tileRecovered) {
+      return 6000000
+    }
+    if (tileTested) {
+      return 200000000
+    }
+    if (tileActive) {
+      return 6000000
+    }
+  }
+
   const mapOptionsIndia = {
     chart: {
       map: mapDataIndia,
@@ -279,6 +294,7 @@ const Home = () => {
 
     colorAxis: {
       min: 0,
+      max: getMaxValue(),
       stops: getColorConfig(),
     },
     plotOptions: {
