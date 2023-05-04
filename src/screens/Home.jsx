@@ -156,9 +156,7 @@ const Home = () => {
     })
   }, [indiaNew])
 
-  const mapOnlickHandler = () => {
-    console.log('a')
-  }
+  const mapOnlickHandler = () => {}
 
   const tileclickhandler = (s) => {
     if (s === 'tested') {
@@ -287,7 +285,9 @@ const Home = () => {
       series: {
         point: {
           events: {
-            click: mapOnlickHandler(),
+            click: (e) => {
+              console.log(e)
+            },
           },
         },
       },
@@ -635,8 +635,6 @@ const Home = () => {
                 rows={rows}
                 columns={columns}
                 getRowId={(r) => r.state_name}
-                pageSize={10}
-                pageSizeOptions={[10, 25, 50]}
                 initialState={{
                   sorting: {
                     sortModel: [{ field: 'confirmed', sort: 'asc' }],
@@ -647,22 +645,30 @@ const Home = () => {
           )}
         </div>
         <div style={{ flex: 1 }} className='chartSection'>
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={chartOptionsconfrimed}
-          />
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={chartOptionstested}
-          />
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={chartOptionsRecovered}
-          />
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={chartOptionsdeceased}
-          />
+          <div className='lineGraph'>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={chartOptionsconfrimed}
+            />
+          </div>
+          <div className='lineGraph'>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={chartOptionstested}
+            />
+          </div>
+          <div className='lineGraph'>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={chartOptionsRecovered}
+            />
+          </div>
+          <div className='lineGraph'>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={chartOptionsdeceased}
+            />
+          </div>
         </div>
       </div>
     </div>
