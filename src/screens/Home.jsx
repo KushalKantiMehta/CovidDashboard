@@ -12,7 +12,12 @@ require('highcharts/modules/map')(Highcharts)
 const Home = () => {
   const indiaNew = useSelector((state) => state.indiaNew)
   const indiaTimeLine = useSelector((state) => state.india)
-  const [mapDataIndiaValues, setMapDataIndiaValues] = React.useState([])
+  const [mapDataIndiaValues, setMapDataIndiaValues] = React.useState({
+    confirmed: [],
+    deceased: [],
+    recovered: [],
+    tested: [],
+  })
   const [confrimedTimelineValue, setConfrimedTimelineValue] = React.useState([])
   const [testedTimelineValue, setTestedTimelineValue] = React.useState([])
   const [recoveredTimelineValue, setRecoveredTimelineValue] = React.useState([])
@@ -25,8 +30,10 @@ const Home = () => {
     vaccinated1: 0,
     vaccinated2: 0,
   })
-
-  console.log('timeline', indiaTimeLine)
+  const [tileActive, setTileActive] = React.useState(true)
+  const [tileDeaths, setTileDeaths] = React.useState(false)
+  const [tileRecovered, setTileRecovered] = React.useState(false)
+  const [tileTested, setTileTested] = React.useState(false)
 
   const rows = Object.keys(indiaNew).map((val) => {
     return {
@@ -48,7 +55,7 @@ const Home = () => {
       type: 'number',
       width: 150,
     },
-    { field: 'deceased', headerName: 'Deaths', type: 'number', width: 150 },
+    { field: 'deceased', headerName: 'Deaths', type: 'number', width: 110 },
     {
       field: 'recovered',
       headerName: 'Recovered',
@@ -76,18 +83,26 @@ const Home = () => {
   ]
 
   React.useEffect(() => {
-    const confirmedTemp = Object.values(indiaTimeLine?.TT?.dates).map((val) => {
-      return val?.total?.confirmed ?? 0
-    })
-    const deceasedTemp = Object.values(indiaTimeLine?.TT?.dates).map((val) => {
-      return val?.total?.deceased ?? 0
-    })
-    const recoveredTemp = Object.values(indiaTimeLine?.TT?.dates).map((val) => {
-      return val?.total?.recovered ?? 0
-    })
-    const testedTemp = Object.values(indiaTimeLine?.TT?.dates).map((val) => {
-      return val?.total?.tested ?? 0
-    })
+    const confirmedTemp = Object.values(indiaTimeLine?.TT?.dates ?? {}).map(
+      (val) => {
+        return val?.total?.confirmed ?? 0
+      }
+    )
+    const deceasedTemp = Object.values(indiaTimeLine?.TT?.dates ?? {}).map(
+      (val) => {
+        return val?.total?.deceased ?? 0
+      }
+    )
+    const recoveredTemp = Object.values(indiaTimeLine?.TT?.dates ?? {}).map(
+      (val) => {
+        return val?.total?.recovered ?? 0
+      }
+    )
+    const testedTemp = Object.values(indiaTimeLine?.TT?.dates ?? {}).map(
+      (val) => {
+        return val?.total?.tested ?? 0
+      }
+    )
     setConfrimedTimelineValue(confirmedTemp)
     setDeathsTimelineValue(deceasedTemp)
     setRecoveredTimelineValue(recoveredTemp)
@@ -95,8 +110,17 @@ const Home = () => {
   }, [indiaTimeLine])
 
   React.useEffect(() => {
-    const temp = Object.keys(indiaNew).map((value) => {
+    const Mapconfrimed = Object.keys(indiaNew).map((value) => {
       return ['in-' + value.toLowerCase(), indiaNew?.[value]?.total?.confirmed]
+    })
+    const Mapdeceased = Object.keys(indiaNew).map((value) => {
+      return ['in-' + value.toLowerCase(), indiaNew?.[value]?.total?.deceased]
+    })
+    const MapTested = Object.keys(indiaNew).map((value) => {
+      return ['in-' + value.toLowerCase(), indiaNew?.[value]?.total?.tested]
+    })
+    const MapRecovered = Object.keys(indiaNew).map((value) => {
+      return ['in-' + value.toLowerCase(), indiaNew?.[value]?.total?.recovered]
     })
     const total = Object.keys(indiaNew).reduce(
       (accumulator, value) => {
@@ -122,12 +146,82 @@ const Home = () => {
         vaccinated2: 0,
       }
     )
+
     setIndiaTotalValues(total)
-    setMapDataIndiaValues(temp)
+    setMapDataIndiaValues({
+      confirmed: [...Mapconfrimed],
+      deceased: [...Mapdeceased],
+      tested: [...MapTested],
+      recovered: [...MapRecovered],
+    })
   }, [indiaNew])
 
   const mapOnlickHandler = () => {
     console.log('a')
+  }
+
+  const tileclickhandler = (s) => {
+    if (s === 'tested') {
+      setTileActive(false)
+      setTileDeaths(false)
+      setTileRecovered(false)
+      setTileTested(true)
+    }
+    if (s === 'recovered') {
+      setTileActive(false)
+      setTileDeaths(false)
+      setTileRecovered(true)
+      setTileTested(false)
+    }
+    if (s === 'deaths') {
+      setTileActive(false)
+      setTileDeaths(true)
+      setTileRecovered(false)
+      setTileTested(false)
+    }
+    if (s === 'active') {
+      setTileActive(true)
+      setTileDeaths(false)
+      setTileRecovered(false)
+      setTileTested(false)
+    }
+    console.log(
+      'active',
+      tileActive,
+      'deaths',
+      tileDeaths,
+      'recovered',
+      tileRecovered,
+      'tested',
+      tileTested
+    )
+  }
+
+  const getMapData = () => {
+    if (tileDeaths) {
+      return mapDataIndiaValues?.deceased
+    }
+    if (tileRecovered) {
+      return mapDataIndiaValues?.recovered
+    }
+    if (tileTested) {
+      return mapDataIndiaValues?.tested
+    }
+    if (tileActive) {
+      return mapDataIndiaValues?.confirmed
+    }
+  }
+  const getMapLabel = () => {
+    if (tileDeaths) {
+      return 'Deaths'
+    }
+    if (tileRecovered) {
+      return 'Recovered'
+    }
+    if (tileTested) {
+      return 'Tested'
+    }
+    return 'Confirmed'
   }
 
   const mapOptionsIndia = {
@@ -145,6 +239,14 @@ const Home = () => {
 
     colorAxis: {
       min: 0,
+      stops: [
+        [0, '#d4dbf4'],
+        [0.2, '#2f7ed8'],
+        [0.4, '#2671c8'],
+        [0.6, '#2165b3'],
+        [0.8, '#1d599d'],
+        [1, '#000000'],
+      ],
     },
     plotOptions: {
       series: {
@@ -157,8 +259,8 @@ const Home = () => {
     },
     series: [
       {
-        data: mapDataIndiaValues,
-        name: 'Confrimed',
+        data: getMapData(),
+        name: getMapLabel(),
         states: {
           hover: {
             color: '#BADA55',
@@ -225,6 +327,9 @@ const Home = () => {
   const chartOptionsconfrimed = {
     chart: {
       height: '150px',
+      borderColor: '#EBBA95',
+      borderRadius: 20,
+      borderWidth: 2,
     },
     title: {
       text: '',
@@ -244,6 +349,7 @@ const Home = () => {
 
     plotOptions: {
       series: {
+        color: '#ffee58',
         label: {
           connectorAllowed: false,
         },
@@ -261,6 +367,9 @@ const Home = () => {
   const chartOptionsdeceased = {
     chart: {
       height: '150px',
+      borderColor: '#EBBA95',
+      borderRadius: 20,
+      borderWidth: 2,
     },
     title: {
       text: '',
@@ -280,6 +389,7 @@ const Home = () => {
 
     plotOptions: {
       series: {
+        color: '#FF0000',
         label: {
           connectorAllowed: false,
         },
@@ -297,6 +407,9 @@ const Home = () => {
   const chartOptionsRecovered = {
     chart: {
       height: '150px',
+      borderColor: '#EBBA95',
+      borderRadius: 20,
+      borderWidth: 2,
     },
     title: {
       text: '',
@@ -316,6 +429,7 @@ const Home = () => {
 
     plotOptions: {
       series: {
+        color: '#7cb342',
         label: {
           connectorAllowed: false,
         },
@@ -333,6 +447,9 @@ const Home = () => {
   const chartOptionstested = {
     chart: {
       height: '150px',
+      borderColor: '#EBBA95',
+      borderRadius: 20,
+      borderWidth: 2,
     },
     title: {
       text: '',
@@ -372,7 +489,10 @@ const Home = () => {
         <div className='basicDetails'>
           <div style={{ flex: 1 }} className='tileRoot'>
             <div className='tileSubRoot'>
-              <div className='tile active'>
+              <div
+                className='tile active'
+                onClick={(e) => tileclickhandler('active')}
+              >
                 Confirmed
                 <AnimatedNumbers
                   includeComma
@@ -389,7 +509,10 @@ const Home = () => {
                   ]}
                 ></AnimatedNumbers>
               </div>
-              <div className='tile deaths'>
+              <div
+                className='tile deaths'
+                onClick={(e) => tileclickhandler('deaths')}
+              >
                 Total Deaths
                 <AnimatedNumbers
                   includeComma
@@ -408,7 +531,10 @@ const Home = () => {
               </div>
             </div>
             <div className='tileSubRoot'>
-              <div className='tile tested'>
+              <div
+                className='tile tested'
+                onClick={(e) => tileclickhandler('tested')}
+              >
                 Tested Cases
                 <AnimatedNumbers
                   includeComma
@@ -425,7 +551,10 @@ const Home = () => {
                   ]}
                 ></AnimatedNumbers>
               </div>
-              <div className='tile recovered'>
+              <div
+                className='tile recovered'
+                onClick={(e) => tileclickhandler('recovered')}
+              >
                 Total Recovered
                 <AnimatedNumbers
                   includeComma
@@ -482,7 +611,7 @@ const Home = () => {
             </Paper>
           )}
         </div>
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 1 }} className='chartSection'>
           <HighchartsReact
             highcharts={Highcharts}
             options={chartOptionsconfrimed}

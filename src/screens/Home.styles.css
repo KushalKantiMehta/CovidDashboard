@@ -47,7 +47,7 @@ flex: 1;
     margin: 30px;
 }
 .active:hover{
-    background-color: lightyellow;
+    background-color: #ffee58;
 }
 
 .deaths:hover{
@@ -61,4 +61,12 @@ flex: 1;
 
 .tested:hover{
     background-color: #007bff80 ; 
+}
+
+.lineGraph{
+    margin-bottom: 10px;
+}
+
+.chartSection{
+    padding: 20px;
 }
