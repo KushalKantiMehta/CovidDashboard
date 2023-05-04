@@ -11,7 +11,12 @@ import './Home.styles.css'
 require('highcharts/modules/map')(Highcharts)
 const Home = () => {
   const indiaNew = useSelector((state) => state.indiaNew)
+  const indiaTimeLine = useSelector((state) => state.india)
   const [mapDataIndiaValues, setMapDataIndiaValues] = React.useState([])
+  const [confrimedTimelineValue, setConfrimedTimelineValue] = React.useState([])
+  const [testedTimelineValue, setTestedTimelineValue] = React.useState([])
+  const [recoveredTimelineValue, setRecoveredTimelineValue] = React.useState([])
+  const [deathsTimelineValue, setDeathsTimelineValue] = React.useState([])
   const [indiaTotalValues, setIndiaTotalValues] = React.useState({
     confirmed: 0,
     deceased: 0,
@@ -20,6 +25,8 @@ const Home = () => {
     vaccinated1: 0,
     vaccinated2: 0,
   })
+
+  console.log('timeline', indiaTimeLine)
 
   const rows = Object.keys(indiaNew).map((val) => {
     return {
@@ -32,6 +39,60 @@ const Home = () => {
       vaccinated2: indiaNew?.[val]?.total?.vaccinated2,
     }
   })
+
+  const columns = [
+    { field: 'state_name', headerName: 'State Name', width: 170 },
+    {
+      field: 'confirmed',
+      headerName: ' Confirmed Cases',
+      type: 'number',
+      width: 150,
+    },
+    { field: 'deceased', headerName: 'Deaths', type: 'number', width: 150 },
+    {
+      field: 'recovered',
+      headerName: 'Recovered',
+      type: 'number',
+      width: 150,
+    },
+    {
+      field: 'tested',
+      headerName: 'Tested Cases',
+      type: 'number',
+      width: 150,
+    },
+    {
+      field: 'vaccinated1',
+      headerName: 'Vaccinated Dose 1',
+      type: 'number',
+      width: 150,
+    },
+    {
+      field: 'vaccinated2',
+      headerName: 'Vaccinated Dose 2',
+      type: 'number',
+      width: 150,
+    },
+  ]
+
+  React.useEffect(() => {
+    const confirmedTemp = Object.values(indiaTimeLine?.TT?.dates).map((val) => {
+      return val?.total?.confirmed ?? 0
+    })
+    const deceasedTemp = Object.values(indiaTimeLine?.TT?.dates).map((val) => {
+      return val?.total?.deceased ?? 0
+    })
+    const recoveredTemp = Object.values(indiaTimeLine?.TT?.dates).map((val) => {
+      return val?.total?.recovered ?? 0
+    })
+    const testedTemp = Object.values(indiaTimeLine?.TT?.dates).map((val) => {
+      return val?.total?.tested ?? 0
+    })
+    setConfrimedTimelineValue(confirmedTemp)
+    setDeathsTimelineValue(deceasedTemp)
+    setRecoveredTimelineValue(recoveredTemp)
+    setTestedTimelineValue(testedTemp)
+  }, [indiaTimeLine])
 
   React.useEffect(() => {
     const temp = Object.keys(indiaNew).map((value) => {
@@ -65,11 +126,15 @@ const Home = () => {
     setMapDataIndiaValues(temp)
   }, [indiaNew])
 
+  const mapOnlickHandler = () => {
+    console.log('a')
+  }
+
   const mapOptionsIndia = {
     chart: {
       map: mapDataIndia,
       height: '95%',
-      backgroundColor: '#00FFFFFF',
+      backgroundColor: '',
     },
     title: {
       text: '',
@@ -81,7 +146,15 @@ const Home = () => {
     colorAxis: {
       min: 0,
     },
-
+    plotOptions: {
+      series: {
+        point: {
+          events: {
+            click: mapOnlickHandler(),
+          },
+        },
+      },
+    },
     series: [
       {
         data: mapDataIndiaValues,
@@ -149,40 +222,149 @@ const Home = () => {
     },
   }
 
-  const columns = [
-    { field: 'state_name', headerName: 'State Name', width: 170 },
-    {
-      field: 'confirmed',
-      headerName: ' Confirmed Cases',
-      type: 'number',
-      width: 150,
+  const chartOptionsconfrimed = {
+    chart: {
+      height: '150px',
     },
-    { field: 'deceased', headerName: 'Deaths', type: 'number', width: 150 },
-    {
-      field: 'recovered',
-      headerName: 'Recovered',
-      type: 'number',
-      width: 150,
+    title: {
+      text: '',
     },
-    {
-      field: 'tested',
-      headerName: 'Tested Cases',
-      type: 'number',
-      width: 150,
+
+    yAxis: {
+      title: {
+        text: 'Number of Cases',
+      },
     },
-    {
-      field: 'vaccinated1',
-      headerName: 'Vaccinated Dose 1',
-      type: 'number',
-      width: 150,
+
+    xAxis: {
+      accessibility: {
+        rangeDescription: 'Range: 2020 to 2022',
+      },
     },
-    {
-      field: 'vaccinated2',
-      headerName: 'Vaccinated Dose 2',
-      type: 'number',
-      width: 150,
+
+    plotOptions: {
+      series: {
+        label: {
+          connectorAllowed: false,
+        },
+      },
     },
-  ]
+
+    series: [
+      {
+        name: 'Confrimed',
+        data: confrimedTimelineValue,
+      },
+    ],
+  }
+
+  const chartOptionsdeceased = {
+    chart: {
+      height: '150px',
+    },
+    title: {
+      text: '',
+    },
+
+    yAxis: {
+      title: {
+        text: 'Number of Cases',
+      },
+    },
+
+    xAxis: {
+      accessibility: {
+        rangeDescription: 'Range: 2020 to 2022',
+      },
+    },
+
+    plotOptions: {
+      series: {
+        label: {
+          connectorAllowed: false,
+        },
+      },
+    },
+
+    series: [
+      {
+        name: 'Deaths',
+        data: deathsTimelineValue,
+      },
+    ],
+  }
+
+  const chartOptionsRecovered = {
+    chart: {
+      height: '150px',
+    },
+    title: {
+      text: '',
+    },
+
+    yAxis: {
+      title: {
+        text: 'Number of Cases',
+      },
+    },
+
+    xAxis: {
+      accessibility: {
+        rangeDescription: 'Range: 2020 to 2022',
+      },
+    },
+
+    plotOptions: {
+      series: {
+        label: {
+          connectorAllowed: false,
+        },
+      },
+    },
+
+    series: [
+      {
+        name: 'Recovered',
+        data: recoveredTimelineValue,
+      },
+    ],
+  }
+
+  const chartOptionstested = {
+    chart: {
+      height: '150px',
+    },
+    title: {
+      text: '',
+    },
+
+    yAxis: {
+      title: {
+        text: 'Number of Cases',
+      },
+    },
+
+    xAxis: {
+      accessibility: {
+        rangeDescription: 'Range: 2020 to 2022',
+      },
+    },
+
+    plotOptions: {
+      series: {
+        label: {
+          connectorAllowed: false,
+        },
+      },
+    },
+
+    series: [
+      {
+        name: 'Tested',
+        data: testedTimelineValue,
+      },
+    ],
+  }
 
   return (
     <div className='home'>
@@ -190,7 +372,7 @@ const Home = () => {
         <div className='basicDetails'>
           <div style={{ flex: 1 }} className='tileRoot'>
             <div className='tileSubRoot'>
-              <div className='tile'>
+              <div className='tile active'>
                 Confirmed
                 <AnimatedNumbers
                   includeComma
@@ -207,7 +389,7 @@ const Home = () => {
                   ]}
                 ></AnimatedNumbers>
               </div>
-              <div className='tile'>
+              <div className='tile deaths'>
                 Total Deaths
                 <AnimatedNumbers
                   includeComma
@@ -226,7 +408,7 @@ const Home = () => {
               </div>
             </div>
             <div className='tileSubRoot'>
-              <div className='tile'>
+              <div className='tile tested'>
                 Tested Cases
                 <AnimatedNumbers
                   includeComma
@@ -243,7 +425,7 @@ const Home = () => {
                   ]}
                 ></AnimatedNumbers>
               </div>
-              <div className='tile'>
+              <div className='tile recovered'>
                 Total Recovered
                 <AnimatedNumbers
                   includeComma
@@ -291,11 +473,33 @@ const Home = () => {
                 getRowId={(r) => r.state_name}
                 pageSize={10}
                 pageSizeOptions={[10, 25, 50]}
+                initialState={{
+                  sorting: {
+                    sortModel: [{ field: 'confirmed', sort: 'asc' }],
+                  },
+                }}
               />
             </Paper>
           )}
         </div>
-        <div style={{ flex: 1 }}></div>
+        <div style={{ flex: 1 }}>
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={chartOptionsconfrimed}
+          />
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={chartOptionstested}
+          />
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={chartOptionsRecovered}
+          />
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={chartOptionsdeceased}
+          />
+        </div>
       </div>
     </div>
   )
