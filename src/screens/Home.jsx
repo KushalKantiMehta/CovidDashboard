@@ -224,6 +224,48 @@ const Home = () => {
     return 'Confirmed'
   }
 
+  const getColorConfig = () => {
+    if (tileDeaths) {
+      return [
+        [0, '#ec9e9b'],
+        [0.2, '#e47470'],
+        [0.4, '#d83530'],
+        [0.6, '#d83530'],
+        [0.8, '#9e221e'],
+        [1, '#891d1a'],
+      ]
+    }
+    if (tileRecovered) {
+      return [
+        [0, '#dbf8dc'],
+        [0.2, '#9bec9e'],
+        [0.4, '#5be05f'],
+        [0.6, '#26c92b'],
+        [0.8, '#1e9e22'],
+        [1, '#1a891d'],
+      ]
+    }
+    if (tileTested) {
+      return [
+        [0, '#d4dbf4'],
+        [0.2, '#2f7ed8'],
+        [0.4, '#2671c8'],
+        [0.6, '#2165b3'],
+        [0.8, '#1d599d'],
+        [1, '#000000'],
+      ]
+    }
+    if (tileActive) {
+      return [
+        [0, '#f7f8db'],
+        [0.4, '#dfe470'],
+        [0.6, '#d1d831'],
+        [0.9, '#adb422'],
+        [1, '#c2c926'],
+      ]
+    }
+  }
+
   const mapOptionsIndia = {
     chart: {
       map: mapDataIndia,
@@ -239,14 +281,7 @@ const Home = () => {
 
     colorAxis: {
       min: 0,
-      stops: [
-        [0, '#d4dbf4'],
-        [0.2, '#2f7ed8'],
-        [0.4, '#2671c8'],
-        [0.6, '#2165b3'],
-        [0.8, '#1d599d'],
-        [1, '#000000'],
-      ],
+      stops: getColorConfig(),
     },
     plotOptions: {
       series: {
