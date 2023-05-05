@@ -1,0 +1,75 @@
+.home{
+    display: flex;
+    flex-direction: column;
+    
+    }
+    .homeContent{
+    padding: 20px;
+    display: flex;
+    flex-direction: row; 
+    
+    height: 90vh;
+    }
+    .homeTable{
+    display: flex;
+    padding: 20px;
+    
+    }
+    .basicDetails{
+     flex:1;
+     display: flex;
+     flex-direction: column;
+    
+     padding: 10px;
+    }
+    .indiaMap{
+    flex: 1;
+    padding: 10px;
+    }
+    .tileRoot{
+    
+    display: flex;
+    flex-direction: column;
+    }
+    .tileSubRoot{
+    flex: 1;
+     display: flex; 
+    }
+    .tile{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        background-color: #007bff20    ;
+        border-radius: 25px;
+        margin: 30px;
+    }
+    .active:hover{
+        background-color: #ffee58;
+    }
+    
+    .deaths:hover{
+        background-color: #FF6060;
+    }
+    
+    .recovered:hover{
+        background-color: lightgreen;
+    
+    }
+    
+    .tested:hover{
+        background-color: #007bff80 ; 
+    }
+    
+    .lineGraph{
+        margin-bottom: 20px;
+    }
+    
+    .chartSection{
+        padding: 20px;
+    }
+
+    .highcharts-series-group{
+        height: 100%;
+    }

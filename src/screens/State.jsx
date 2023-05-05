@@ -5,12 +5,12 @@ import HighchartsReact from 'highcharts-react-official'
 import { DataGrid } from '@mui/x-data-grid'
 import Paper from '@mui/material/Paper'
 import AnimatedNumbers from 'react-animated-numbers'
-import mapDataIndia from '../MapData/indiaMap'
-import { useNavigate } from 'react-router-dom'
-import stateKVP from '../assets/state'
-import './Home.styles.css'
+import stateMap from '../MapData/statesMap'
+import './State.styles.css'
+import { useParams } from 'react-router-dom'
 require('highcharts/modules/map')(Highcharts)
-const Home = () => {
+const State = () => {
+  const { id } = useParams()
   const indiaNew = useSelector((state) => state.indiaNew)
   const indiaTimeLine = useSelector((state) => state.india)
   const [mapDataIndiaValues, setMapDataIndiaValues] = React.useState({
@@ -35,21 +35,35 @@ const Home = () => {
   const [tileDeaths, setTileDeaths] = React.useState(false)
   const [tileRecovered, setTileRecovered] = React.useState(false)
   const [tileTested, setTileTested] = React.useState(false)
-
-  const rows = Object.keys(indiaNew).map((val) => {
+  const key = id.split('-')
+  const rows = Object.keys(
+    indiaNew?.[key[1].toUpperCase()]?.districts ?? {}
+  ).map((val) => {
     return {
-      state_name: stateKVP?.[val],
-      confirmed: indiaNew?.[val]?.total?.confirmed,
-      deceased: indiaNew?.[val]?.total?.deceased,
-      recovered: indiaNew?.[val]?.total?.recovered,
-      tested: indiaNew?.[val]?.total?.tested,
-      vaccinated1: indiaNew?.[val]?.total?.vaccinated1,
-      vaccinated2: indiaNew?.[val]?.total?.vaccinated2,
+      district_name: val,
+      confirmed:
+        indiaNew?.[key[1].toUpperCase()]?.districts?.[val]?.total?.confirmed ??
+        'N/A',
+      deceased:
+        indiaNew?.[key[1].toUpperCase()]?.districts?.[val]?.total?.deceased ??
+        'N/A',
+      recovered:
+        indiaNew?.[key[1].toUpperCase()]?.districts?.[val]?.total?.recovered ??
+        'N/A',
+      tested:
+        indiaNew?.[key[1].toUpperCase()]?.districts?.[val]?.total?.tested ??
+        'N/A',
+      vaccinated1:
+        indiaNew?.[key[1].toUpperCase()]?.districts?.[val]?.total
+          ?.vaccinated1 ?? 'N/A',
+      vaccinated2:
+        indiaNew?.[key[1].toUpperCase()]?.districts?.[val]?.total
+          ?.vaccinated2 ?? 'N/A',
     }
   })
 
   const columns = [
-    { field: 'state_name', headerName: 'State Name', width: 170 },
+    { field: 'district_name', headerName: 'District Name', width: 170 },
     {
       field: 'confirmed',
       headerName: ' Confirmed Cases',
@@ -84,26 +98,26 @@ const Home = () => {
   ]
 
   React.useEffect(() => {
-    const confirmedTemp = Object.values(indiaTimeLine?.TT?.dates ?? {}).map(
-      (val) => {
-        return val?.total?.confirmed ?? 0
-      }
-    )
-    const deceasedTemp = Object.values(indiaTimeLine?.TT?.dates ?? {}).map(
-      (val) => {
-        return val?.total?.deceased ?? 0
-      }
-    )
-    const recoveredTemp = Object.values(indiaTimeLine?.TT?.dates ?? {}).map(
-      (val) => {
-        return val?.total?.recovered ?? 0
-      }
-    )
-    const testedTemp = Object.values(indiaTimeLine?.TT?.dates ?? {}).map(
-      (val) => {
-        return val?.total?.tested ?? 0
-      }
-    )
+    const confirmedTemp = Object.values(
+      indiaTimeLine?.[key[1].toUpperCase()]?.dates ?? {}
+    ).map((val) => {
+      return val?.total?.confirmed ?? 0
+    })
+    const deceasedTemp = Object.values(
+      indiaTimeLine?.[key[1].toUpperCase()]?.dates ?? {}
+    ).map((val) => {
+      return val?.total?.deceased ?? 0
+    })
+    const recoveredTemp = Object.values(
+      indiaTimeLine?.[key[1].toUpperCase()]?.dates ?? {}
+    ).map((val) => {
+      return val?.total?.recovered ?? 0
+    })
+    const testedTemp = Object.values(
+      indiaTimeLine?.[key[1].toUpperCase()]?.dates ?? {}
+    ).map((val) => {
+      return val?.total?.tested ?? 0
+    })
     setConfrimedTimelineValue(confirmedTemp)
     setDeathsTimelineValue(deceasedTemp)
     setRecoveredTimelineValue(recoveredTemp)
@@ -111,44 +125,27 @@ const Home = () => {
   }, [indiaTimeLine])
 
   React.useEffect(() => {
-    const Mapconfrimed = Object.keys(indiaNew).map((value) => {
+    const Mapconfrimed = Object.keys(indiaNew?.[id] ?? {}).map((value) => {
       return ['in-' + value.toLowerCase(), indiaNew?.[value]?.total?.confirmed]
     })
-    const Mapdeceased = Object.keys(indiaNew).map((value) => {
+    const Mapdeceased = Object.keys(indiaNew?.[id] ?? {}).map((value) => {
       return ['in-' + value.toLowerCase(), indiaNew?.[value]?.total?.deceased]
     })
-    const MapTested = Object.keys(indiaNew).map((value) => {
+    const MapTested = Object.keys(indiaNew?.[id] ?? {}).map((value) => {
       return ['in-' + value.toLowerCase(), indiaNew?.[value]?.total?.tested]
     })
-    const MapRecovered = Object.keys(indiaNew).map((value) => {
+    const MapRecovered = Object.keys(indiaNew?.[id] ?? {}).map((value) => {
       return ['in-' + value.toLowerCase(), indiaNew?.[value]?.total?.recovered]
     })
-    const total = Object.keys(indiaNew).reduce(
-      (accumulator, value) => {
-        return {
-          confirmed:
-            accumulator?.confirmed + indiaNew?.[value]?.total?.confirmed,
-          deceased: accumulator?.deceased + indiaNew?.[value]?.total?.deceased,
-          recovered:
-            accumulator?.recovered + indiaNew?.[value]?.total?.recovered,
-          tested: accumulator?.tested + indiaNew?.[value]?.total?.tested,
-          vaccinated1:
-            accumulator?.vaccinated1 + indiaNew?.[value]?.total?.vaccinated1,
-          vaccinated2:
-            accumulator?.vaccinated2 + indiaNew?.[value]?.total?.vaccinated2,
-        }
-      },
-      {
-        confirmed: 0,
-        deceased: 0,
-        recovered: 0,
-        tested: 0,
-        vaccinated1: 0,
-        vaccinated2: 0,
-      }
-    )
 
-    setIndiaTotalValues(total)
+    setIndiaTotalValues({
+      confirmed: indiaNew?.[key[1].toUpperCase()]?.total?.confirmed,
+      deceased: indiaNew?.[key[1].toUpperCase()]?.total?.deceased,
+      tested: indiaNew?.[key[1].toUpperCase()]?.total?.tested,
+      recovered: indiaNew?.[key[1].toUpperCase()]?.total?.recovered,
+      vaccinated1: indiaNew?.[key[1].toUpperCase()]?.total?.vaccinated1,
+      vaccinated2: indiaNew?.[key[1].toUpperCase()]?.total?.vaccinated2,
+    })
     setMapDataIndiaValues({
       confirmed: [...Mapconfrimed],
       deceased: [...Mapdeceased],
@@ -156,14 +153,6 @@ const Home = () => {
       recovered: [...MapRecovered],
     })
   }, [indiaNew])
-
-  const navigate = useNavigate()
-
-  const mapOnlickHandler = (s) => {
-    if (s !== 'in-tt') {
-      navigate('/' + s)
-    }
-  }
 
   const tileclickhandler = (s) => {
     if (s === 'tested') {
@@ -271,24 +260,23 @@ const Home = () => {
     }
   }
 
-  const getMaxValue = () => {
-    if (tileDeaths) {
-      return 100000
-    }
-    if (tileRecovered) {
-      return 6000000
-    }
-    if (tileTested) {
-      return 200000000
-    }
-    if (tileActive) {
-      return 6000000
-    }
-  }
+  //   const getMaxValue = () => {
+  //     if (tileDeaths) {
+  //       return 100000
+  //     }
+  //     if (tileRecovered) {
+  //       return 6000000
+  //     }
+  //     if (tileTested) {
+  //       return 200000000
+  //     }
+  //     if (tileActive) {
+  //       return 6000000
+  //     }
+  //   }
 
-  const mapOptionsIndia = {
+  const mapOptionsState = {
     chart: {
-      map: mapDataIndia,
       height: '95%',
       backgroundColor: '',
     },
@@ -301,24 +289,15 @@ const Home = () => {
 
     colorAxis: {
       min: 0,
-      max: getMaxValue(),
+      // max: getMaxValue(),
       stops: getColorConfig(),
-    },
-    plotOptions: {
-      series: {
-        point: {
-          events: {
-            click: (e) => {
-              mapOnlickHandler(e?.point?.['hc-key'])
-            },
-          },
-        },
-      },
     },
     series: [
       {
+        mapData: stateMap?.[id],
         data: getMapData(),
         name: getMapLabel(),
+        joinBy: ['district'],
         states: {
           hover: {
             color: '#BADA55',
@@ -637,7 +616,7 @@ const Home = () => {
         </div>
         <div className='indiaMap'>
           <HighchartsReact
-            options={mapOptionsIndia}
+            options={mapOptionsState}
             highcharts={Highcharts}
             constructorType={'mapChart'}
           />
@@ -657,7 +636,7 @@ const Home = () => {
               <DataGrid
                 rows={rows}
                 columns={columns}
-                getRowId={(r) => r.state_name}
+                getRowId={(r) => r.district_name}
                 initialState={{
                   sorting: {
                     sortModel: [{ field: 'confirmed', sort: 'asc' }],
@@ -698,4 +677,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default State

@@ -6,6 +6,7 @@ import NotFound from './screens/NotFound'
 import AboutUs from './screens/AboutUs'
 import Home from './screens/Home'
 import World from './screens/World'
+import State from './screens/State'
 import { useDispatch } from 'react-redux'
 import {
   getDataWorld,
@@ -26,6 +27,7 @@ function App() {
           <Header />
           <Routes>
             <Route path='/world' element={<World />} exact />
+            <Route path='/:id' element={<State />} exact />
             <Route path='/' element={<Home />} exact />
             <Route path='/aboutus' element={<AboutUs />} exact />
             <Route path='*' element={<NotFound />} />
