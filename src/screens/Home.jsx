@@ -161,7 +161,7 @@ const Home = () => {
 
   const mapOnlickHandler = (s) => {
     if (s !== 'in-tt') {
-      navigate('/' + s)
+      navigate('/state/' + s)
     }
   }
 
