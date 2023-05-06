@@ -292,12 +292,16 @@ const State = () => {
       // max: getMaxValue(),
       stops: getColorConfig(),
     },
+    plotOptions: {
+      map: {
+        joinBy: ['district'],
+      },
+    },
     series: [
       {
         mapData: stateMap?.[id],
         data: getMapData(),
         name: getMapLabel(),
-        joinBy: ['district'],
         states: {
           hover: {
             color: '#BADA55',

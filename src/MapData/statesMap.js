@@ -1,4 +1,3 @@
-// map json to fill
 const stateMap = {
   'in-an': {
     type: 'Topology',
