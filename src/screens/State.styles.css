@@ -41,20 +41,22 @@
         align-items: center;
         justify-content: center;
         flex: 1;
-        background-color: #007bff20    ;
+        color: white;
+        background-color: #14AFF1;
         border-radius: 25px;
         margin: 30px;
+        font-size: 25px;
     }
     .active:hover{
-        background-color: #ffee58;
+        background-color: #EADE72;
     }
     
     .deaths:hover{
-        background-color: #FF6060;
+        background-color: #EA7777;
     }
     
     .recovered:hover{
-        background-color: lightgreen;
+        background-color: #9BD79B;
     
     }
     
@@ -68,8 +70,4 @@
     
     .chartSection{
         padding: 20px;
-    }
-
-    .highcharts-series-group{
-        height: 100%;
     }

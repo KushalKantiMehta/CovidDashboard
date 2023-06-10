@@ -1,12 +1,12 @@
 import axios from 'axios'
 
-// get world covid data
+// get world covid data , the data present is in csv format
 const worldRequest = {
   method: 'GET',
-  url: 'https://corona-virus-world-and-india-data.p.rapidapi.com/api',
+  url: 'https://covid19.who.int/WHO-COVID-19-global-table-data.csv',
   headers: {
-    'X-RapidAPI-Key': 'c8208a25cbmshad1ebaef0e01d95p1f67c5jsn18e7ec37ebd2',
-    'X-RapidAPI-Host': 'corona-virus-world-and-india-data.p.rapidapi.com',
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
   },
 }
 

@@ -1,5 +1,8 @@
 .header{
-    height: 50px;
-    background-color: lightskyblue;
+    height: fit-content;
     text-align: center;
+    padding: 15px 0;
+    font-family:sans-serif;
+    box-shadow:  6px 6px 33px #bababa,
+    -6px -6px 33px #ffffff;
 }

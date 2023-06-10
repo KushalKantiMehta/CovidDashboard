@@ -1,6 +1,7 @@
 .App {
 display: flex;
 flex-direction: row;
+background-color:#f9f9f9;
 }
 .mainContent{
 flex: 1;

@@ -7,7 +7,7 @@ import './World.styles.css'
 const World = () => {
   const world = useSelector((state) => state.world)
   const rows = world?.countries_stat
-  console.log(world)
+  console.log('world', world)
 
   const columns = [
     { field: 'country_name', headerName: 'Country Name', width: 170 },

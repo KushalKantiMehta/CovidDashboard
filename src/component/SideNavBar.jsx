@@ -33,15 +33,6 @@ const SideNavBar = () => {
           </NavIcon>
           <NavText>India</NavText>
         </NavItem>
-        <NavItem eventKey='world'>
-          <NavIcon>
-            <i
-              className='fa-solid fa-earth-asia'
-              style={{ fontSize: '1.5em' }}
-            />
-          </NavIcon>
-          <NavText>World</NavText>
-        </NavItem>
         <NavItem eventKey='aboutus'>
           <NavIcon>
             <i

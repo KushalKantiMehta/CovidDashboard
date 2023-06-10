@@ -36,6 +36,10 @@ const Home = () => {
   const [tileRecovered, setTileRecovered] = React.useState(false)
   const [tileTested, setTileTested] = React.useState(false)
 
+  React.useEffect(() => {
+    console.log('')
+  })
+
   const rows = Object.keys(indiaNew).map((val) => {
     return {
       state_name: stateKVP?.[val],
@@ -555,7 +559,7 @@ const Home = () => {
                 <AnimatedNumbers
                   includeComma
                   animateToNumber={indiaTotalValues?.confirmed ?? 0}
-                  fontStyle={{ fontSize: 20 }}
+                  fontStyle={{ fontSize: 40, fontWeight: 500, color: 'white' }}
                   locale='en-US'
                   configs={[
                     { mass: 1, tension: 220, friction: 100 },
@@ -575,7 +579,7 @@ const Home = () => {
                 <AnimatedNumbers
                   includeComma
                   animateToNumber={indiaTotalValues?.deceased ?? 0}
-                  fontStyle={{ fontSize: 20 }}
+                  fontStyle={{ fontSize: 40, fontWeight: 500, color: 'white' }}
                   locale='en-US'
                   configs={[
                     { mass: 1, tension: 220, friction: 100 },
@@ -597,7 +601,7 @@ const Home = () => {
                 <AnimatedNumbers
                   includeComma
                   animateToNumber={indiaTotalValues?.tested ?? 0}
-                  fontStyle={{ fontSize: 20 }}
+                  fontStyle={{ fontSize: 40, fontWeight: 500, color: 'white' }}
                   locale='en-US'
                   configs={[
                     { mass: 1, tension: 220, friction: 100 },
@@ -617,7 +621,7 @@ const Home = () => {
                 <AnimatedNumbers
                   includeComma
                   animateToNumber={indiaTotalValues?.recovered ?? 0}
-                  fontStyle={{ fontSize: 20 }}
+                  fontStyle={{ fontSize: 40, fontWeight: 500, color: 'white' }}
                   locale='en-US'
                   configs={[
                     { mass: 1, tension: 220, friction: 100 },
