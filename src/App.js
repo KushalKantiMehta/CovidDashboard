@@ -25,7 +25,7 @@ function App() {
         <div className='mainContent'>
           <Header />
           <Routes>
-            <Route path='/:id' element={<State />} exact />
+            <Route path='/state/:id' element={<State />} exact />
             <Route path='/' element={<Home />} exact />
             <Route path='/aboutus' element={<AboutUs />} exact />
             <Route path='*' element={<NotFound />} />
